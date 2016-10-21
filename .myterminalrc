@@ -1,10 +1,10 @@
 alias lh="ls -Ahl"
-alias project="cd /mnt/c/Users/Vincent/Dropbox/DWH\ Spill/Summer\ 2016/DWHDataViewer/dwhdataviewer"
+alias project="cd /mnt/c/Users/Vincent/Documents/Desk/Casino"
 alias desk="cd /mnt/c/Users/Vincent/Documents/Desk"
 alias agi="sudo apt-get install"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
-function cdl { cd $1; ls;}
+function cdl { cd $1; ls; }
 PROMPT_DIRTRIM=2
 
 export PATH="/home/vguarnaccia/anaconda3/bin:$PATH"
