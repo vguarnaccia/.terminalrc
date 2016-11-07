@@ -1,3 +1,13 @@
+# my bashrc:
+if [ -f ~/.bashrc ]; then
+    for f in ~/.terminalrcs/*; do
+        source $f
+    done
+fi
+
+# generic Ubuntu .bashrc:
+#-------------------------------------------------------------------------
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -111,8 +121,4 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-if [ -f ~/.bashrc ]; then
-	source ~/.myterminalrc
 fi
