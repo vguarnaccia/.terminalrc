@@ -1,0 +1,3 @@
+function cdl { cd $1; ls; }
+PROMPT_DIRTRIM=2
+

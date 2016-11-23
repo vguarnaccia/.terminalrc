@@ -1,0 +1,7 @@
+alias lh="ls -Ahl"
+alias code="~/code"
+alias notes="~/notes"
+alias agi="sudo apt install"
+alias update="sudo apt update"
+alias upgrade="sudo apt upgrade"
+alias python="python3"
