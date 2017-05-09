@@ -16,15 +16,6 @@ def get_parser():
         'Simple CLI tool for installing "terminalrc" for bash and fish'
     )
     parser.add_argument(
-        '-i',
-        '--indent',
-        dest='indent',
-        help=('Select the indentation style used in your bashrc.'
-              'Common examples includes 2, 4, or 8 spaces as well as tabs'),
-        type=str,
-        default='    '
-    )
-    parser.add_argument(
         '-f',
         '--bashrc',
         help='Specify the file path to your .bashrc',
@@ -40,17 +31,8 @@ def main(command=None):
     args = get_parser().parse_args(command.split() if command else None)
 
     # Format script for bashrc
-    script_tpl = ('\n'
-                  'if [ -f ~/.bashrc ]; then\n'
-                  '{indent}for f in ~/.terminalrc/bashrcs/*; do\n'
-                  '{indent}{indent}source "$f"\n'
-                  '{indent}done\n'
-                  'fi')
-    script = script_tpl.format(indent=args.indent)
-
-    regex = re.compile(r'if \[ -f ~\/\.bashrc \]; then\s*'
-                       r'for f in ~\/\.terminalrc\/bashrcs\/\*; do\s*'
-                       r'source "\$f"\s*done\s*fi')
+    script = '\nsource ~/.terminalrc/bash.config'
+    regex = re.compile(r'\nsource ~/\.terminalrc/bash\.config')
     with args.bashrc as bashrc:
         content = bashrc.read()
         if regex.search(content):
