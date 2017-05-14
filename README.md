@@ -1,5 +1,5 @@
 ## terminalrc
-This is how I setup my terminal. It currently supports bash and should work on cygwin. I plan to add fish as I use it more.
+This is how I setup my terminal. It currently supports bash and should work on cygwin. I plan to add [fish](http://fishshell.com/) as I use it more.
 
 Install with:
 
@@ -13,4 +13,4 @@ Uninstall with:
 
     python ~/.terminalrc/installer.py --remove bashrc
 
-And then delete .terminalrc
+And then delete `.terminalrc/`
