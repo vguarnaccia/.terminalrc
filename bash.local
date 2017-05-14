@@ -1,2 +1,3 @@
 alias notes="cd ~/notes"
 alias proj="cdl ~/code/Casino"
+echo "Did you know that:"; whatis $(ls /bin | shuf -n 1)
