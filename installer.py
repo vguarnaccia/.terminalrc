@@ -21,8 +21,9 @@ TODO:
 
 import argparse
 from collections import namedtuple
-import os
+from os import path
 import re
+import sys
 
 def parse_args(params=None):
     """Create Namespace object from a string or argv[1:].
@@ -33,17 +34,20 @@ def parse_args(params=None):
     """
     parser = argparse.ArgumentParser(description=
                                      'Simple CLI tool to install "terminalrc" for bash and fish')
+
+    # Mac will source .bash_profile but not .bashrc
+    bash_config = '.bashrc' if sys.platform != 'darwin' else '.bash_profile'
+    default_bashrc_path = path.join(path.expanduser('~'), bash_config)
     parser.add_argument(
         '-b',
         '--bashrc',
         help='Specify the file path to your .bashrc if it\'s not ~/.bashrc',
         type=argparse.FileType('r+'),
-        default=os.path.expanduser('~') + os.sep + '.bashrc'
+        default=default_bashrc_path
     )
     parser.add_argument('--remove', choices=['bashrc', 'config.fish'],
                         help='remove script from bashrc or config.fish')
-    default_fish = os.path.join(os.path.expanduser('~'),
-                                '.config', 'fish', 'config.fish')
+    default_fish = path.join(path.expanduser('~'), '.config', 'fish', 'config.fish')
     parser.add_argument(
         '-f',
         '--fish',
@@ -68,8 +72,8 @@ def main(params=None):
     args = parse_args(params)
 
     # Script for bashrc
-    bash_script = Script('\nsource ~/.terminalrc/bash.config',
-                         re.compile(r'\nsource ~/\.terminalrc/bash\.config'))
+    bash_script = Script('\nsource ~/.terminalrc/bash.config\n',
+                         re.compile(r'\nsource ~/\.terminalrc/bash\.config\n'))
     with args.bashrc as bashrc:
         content = bashrc.read()
         if args.remove == 'bashrc':
