@@ -42,7 +42,7 @@ def parse_args(params=None):
         '-b',
         '--bashrc',
         help='Specify the file path to your .bashrc if it\'s not ~/.bashrc',
-        type=argparse.FileType('r+'),
+        type=argparse.FileType('a+'),
         default=default_bashrc_path
     )
     parser.add_argument('--remove', choices=['bashrc', 'config.fish'],
@@ -53,7 +53,7 @@ def parse_args(params=None):
         '--fish',
         help=('Specify the file path to your config.fish. '
               'It\'s probably %s' % default_fish),
-        type=argparse.FileType('r+'),
+        type=argparse.FileType('a+'),
     )
     return parser.parse_args(params.split() if params else None)
 
@@ -75,6 +75,7 @@ def main(params=None):
     bash_script = Script('\nsource ~/.terminalrc/bash.config\n',
                          re.compile(r'\nsource ~/\.terminalrc/bash\.config\n'))
     with args.bashrc as bashrc:
+        bashrc.seek(0)
         content = bashrc.read()
         if args.remove == 'bashrc':
 
