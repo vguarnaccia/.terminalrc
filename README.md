@@ -15,25 +15,33 @@ Install with:
     git clone https://github.com/vguarnaccia/terminalrc.git ~/.terminalrc/
     python ~/.terminalrc/installer.py
     source ~/.bashrc
-    
-Uninstall with:
+
+Uninstall bash config with:
 
     python ~/.terminalrc/installer.py --remove bashrc
 
 And then delete `.terminalrc/`
 
-### Tests
+### Extendible
 
-I've tested it on Linux and it *should* also work on Mac, where it installs the script on .bash_profile instead of .bashrc. I have no way of testing this so please let me know if you have! I plan to test the configuration on [Cygwin](https://www.cygwin.com/) as well.
+If you need any local configurations, you can add them to `~/.terminalrc/bash.local`.
+
+### Platforms
+
+I've tested it on Linux and [Cygwin](https://www.cygwin.com/). It *should* also work on Mac, where it installs the script on .bash_profile instead of .bashrc.
 
 ### Bash Features
 
-I included a trimmed prompt, and case-insensitive autocomplete. Autocomplete will show suggestions whenever there is ambiguity. Each time you open a new terminal, a quick description of a random command will print. There's room for improvement on that feature but it's a good way to learn about more obscure commands. If you need any local configurations, you can all them to `~/.terminalrc/bash.local`.
+* Each time you open a new terminal, a quick description of a random command will print. There's room for improvement on that feature but it's a good way to learn about more obscure commands.
+* Smart Autocomplete: case-insensitive autocomplete for directories and git autocomplete.
+* Colorized prompt, manpages and commands.
+* `extract` command which will try to decompress various archive types.
 
 #### Extended Navigation Commands
 
-* `lh`: Complete, long `ls`, with human-readable size.
-* `cld`: Change directory and list contents.
+* `l`: Horizontally list content (`ls -CF`).
+* `ll`: Vertically list content (`ls -AhlF`).
+* `cdl`: Change directory and list contents.
 * `mkcd`: Make directory and enter it.
 
 You should also use the command `tree`; it's great for viewing directory hierarchies.
@@ -54,3 +62,4 @@ Because git commands are too long to type fully. If you are doing any complicate
 * `gpu`: `git push`
 * `gbr`: `git branch -vv` -- verbose branching
 * `gst`: `git stash`
+* `gcache`: extend credentials timeout to 1 hour (for `gpu`/`gpl`).
