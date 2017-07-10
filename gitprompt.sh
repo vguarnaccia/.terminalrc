@@ -7,7 +7,7 @@
 # Based upon the following gists:
 # <https://gist.github.com/henrik/31631>
 # <https://gist.github.com/srguiwiz/de87bf6355717f0eede5>
-# Modified by me, using ideas from comments on those gists.
+# Modified using ideas from the gists and ShellCheck
 #
 # License: MIT, unless the authors of those two gists object :)
 
@@ -28,15 +28,15 @@ git_status() {
     # ? untracked files are present
     # S changes have been stashed
     # P local commits need to be pushed to the remote
-    local status="$(git status --porcelain 2>/dev/null)"
-    local output=''
-    [[ -n $(egrep '^[MADRC]' <<<"$status") ]] && output="$output+"
-    [[ -n $(egrep '^.[MD]' <<<"$status") ]] && output="$output!"
-    [[ -n $(egrep '^\?\?' <<<"$status") ]] && output="$output?"
+    status="$(git status --porcelain 2>/dev/null)"
+    output=''
+    egrep -q '^[MADRC]' <<<"$status" && output="$output+"
+    egrep -q '^.[MD]' <<<"$status" && output="$output!"
+    egrep -q '^\?\?' <<<"$status" && output="$output?"
     [[ -n $(git stash list) ]] && output="${output}S"
     [[ -n $(git log --branches --not --remotes) ]] && output="${output}P"
     [[ -n $output ]] && output="|$output"  # separate from branch name
-    echo $output
+    echo "$output"
 }
 
 git_color() {
@@ -47,9 +47,9 @@ git_color() {
     # - Red if there are uncommitted changes with nothing staged
     # - Yellow if there are both staged and unstaged changes
     # - Blue if there are unpushed commits
-    local staged=$([[ $1 =~ \+ ]] && echo yes)
-    local dirty=$([[ $1 =~ [!\?] ]] && echo yes)
-    local needs_push=$([[ $1 =~ P ]] && echo yes)
+    staged=$([[ $1 =~ \+ ]] && echo yes)
+    dirty=$([[ $1 =~ [!\?] ]] && echo yes)
+    needs_push=$([[ $1 =~ P ]] && echo yes)
     if [[ -n $staged ]] && [[ -n $dirty ]]; then
         echo -e '\033[1;33m'  # bold yellow
     elif [[ -n $staged ]]; then
@@ -65,12 +65,12 @@ git_color() {
 
 git_prompt() {
     # First, get the branch name...
-    local branch=$(git_branch)
+    branch=$(git_branch)
     # Empty output? Then we're not in a Git repository, so bypass the rest
     # of the function, producing no output
     if [[ -n $branch ]]; then
-        local state=$(git_status)
-        local color=$(git_color $state)
+        state=$(git_status)
+        color=$(git_color "$state")
         # Now output the actual code to insert the branch and status
         echo -e "\x01$color\x02($branch$state)\x01\033[00m\x02"  # last bit resets color
     fi
