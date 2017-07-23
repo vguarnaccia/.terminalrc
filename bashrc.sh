@@ -262,9 +262,9 @@ export GIT_PS1_DESCRIBE_STYLE="branch"
 
 # Git Prompt
 if [ "$color_prompt" = yes ]; then
-    GREEN='\033[01;32m'
-    BLUE='\033[01;34m'
-    RESET='\033[00m'
+    GREEN='\[\e[01;32m\]'
+    BLUE='\[\e[01;34m\]'
+    RESET='\[\e[00m\]'
     PROMPT_COMMAND='__git_ps1 "${debian_chroot:+($debian_chroot) }$GREEN\u@\h$RESET $BLUE\w$RESET" "\n\$ "'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h \w $(__git_ps1)\n\$ '
