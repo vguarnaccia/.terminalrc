@@ -72,8 +72,8 @@ def main(params=None):
     args = parse_args(params)
 
     # Script for bashrc
-    bash_script = Script('\nsource ~/.terminalrc/bash.config\n',
-                         re.compile(r'\nsource ~/\.terminalrc/bash\.config\n'))
+    bash_script = Script('\nsource ~/.terminalrc/bashrc.sh\n',
+                         re.compile(r'\nsource ~/\.terminalrc/bashrc\.sh\n'))
     with args.bashrc as bashrc:
         bashrc.seek(0)
         content = bashrc.read()
