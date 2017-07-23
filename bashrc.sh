@@ -20,8 +20,8 @@ fi
 ###############################################################################
 
 # source non-generic configuration
-if [ -e "${HOME}/.terminalrc/bash.local" ] ; then
-    source "${HOME}/.terminalrc/bash.local"
+if [ -e "${HOME}/.terminalrc/local-bashrc.sh" ] ; then
+    source "${HOME}/.terminalrc/local-bashrc.sh"
 fi
 
 # Echo whatis for random function
