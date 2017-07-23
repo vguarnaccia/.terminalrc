@@ -285,7 +285,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Git Abbreviations
 ###############################################################################
 
-alias gs='git status'
+alias gs='git status -sb'
 alias ga='git add'
 alias gd='git diff'
 alias gdc='git diff --cached'
