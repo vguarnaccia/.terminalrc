@@ -112,7 +112,7 @@ alias df='df -h'
 alias du='du -h'
 
 # Avoid mistakes
-alias rm='rm -i'
+alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
 
