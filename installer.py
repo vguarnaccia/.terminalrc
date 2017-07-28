@@ -1,12 +1,12 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-"""A simple script for installing the terminal configuration files into your bashrc or config.fish.
+"""A simple script for installing the terminal configuration files into your bashrc or zsh.
 
 This script is meant to be used as a command line interface tool. It can also remove the script if
 you no longer want it. You can find terminalrc at https://github.com/vguarnaccia/terminalrc
 
 Examples:
-    $ python installer.py
+    $ python installer.py -i bash
     Install Successful!
 
     $ python installer.py
@@ -15,8 +15,6 @@ Examples:
     $ python installer.py --remove bashrc
     Script removed. Remember to delete ~/.terminalrc
 
-TODO:
-    * Implement for config.fish.
 """
 
 import argparse
@@ -32,12 +30,13 @@ def parse_args(params=None):
         params (str): a string in the form of command arguments.
             If none provided, it will pull from argv.
     """
-    parser = argparse.ArgumentParser(description=
-                                     'Simple CLI tool to install "terminalrc" for bash and fish')
+    parser = argparse.ArgumentParser(description='Simple CLI tool to install "terminalrc" \
+                                                  on bash or zsh')
 
     # Mac will source .bash_profile but not .bashrc
     bash_config = '.bashrc' if sys.platform != 'darwin' else '.bash_profile'
     default_bashrc_path = path.join(path.expanduser('~'), bash_config)
+
     parser.add_argument(
         '-b',
         '--bashrc',
@@ -45,16 +44,18 @@ def parse_args(params=None):
         type=argparse.FileType('a+'),
         default=default_bashrc_path
     )
-    parser.add_argument('--remove', choices=['bashrc', 'config.fish'],
-                        help='remove script from bashrc or config.fish')
-    default_fish = path.join(path.expanduser('~'), '.config', 'fish', 'config.fish')
+    default_zshrc_path = path.join(path.expanduser('~'), '.zshrc')
     parser.add_argument(
-        '-f',
-        '--fish',
-        help=('Specify the file path to your config.fish. '
-              'It\'s probably %s' % default_fish),
+        '-z',
+        '--zshrc',
+        help='Specify the file path to your .zshrc if it\'s not ~/.zshrc',
         type=argparse.FileType('a+'),
+        default=default_zshrc_path
     )
+    parser.add_argument('-i', '--install', choices=['bashrc', 'zshrc'],
+                        help='install script into bashrc or zshrc')
+    parser.add_argument('--remove', choices=['bashrc', 'zshrc'],
+                        help='remove script from bashrc or zshrc')
     return parser.parse_args(params.split() if params else None)
 
 
@@ -62,34 +63,70 @@ def parse_args(params=None):
 Script = namedtuple('Script', ['text', 'regex'])
 
 
-def main(params=None):
-    """Add or remove the bash script
+def insert_script(file, script):
+    """Insert remove script into file."""
+    file.seek(0)
+    content = file.read()
+    if script.regex.search(content):
+        return 'Already installed :)'
+    file.write(script.text)
+    file.close()
+    return 'Install successful!'
 
-    TODO:
-        Extend for config.fish
-    """
+
+def remove_script(file, script):
+    """Remove script from file."""
+    file.seek(0)
+    content = file.read()
+    # Rewrite bashrc without script
+    without_script = script.regex.sub('', content)
+    file.seek(0)
+    file.truncate()
+    file.write(without_script)
+    file.close()
+    return 'Script removed. Remember to delete ~/.terminalrc'
+
+
+def main(params=None):
+    """Add or remove the bash script."""
     # Get args from main or from console
     args = parse_args(params)
 
     # Script for bashrc
-    bash_script = Script('\nsource ~/.terminalrc/bashrc.sh\n',
-                         re.compile(r'\nsource ~/\.terminalrc/bashrc\.sh\n'))
-    with args.bashrc as bashrc:
-        bashrc.seek(0)
-        content = bashrc.read()
-        if args.remove == 'bashrc':
+    body = (
+        'source ~/.terminalrc/bashrc.sh\n'
+        'source ~/.terminalrc/aliases.sh\n'
+    )
+    pattern = (
+        r'source ~\/.terminalrc\/(bashrc|aliases|zshrc)\.sh\n'
+    )
+    bash_script = Script(body, re.compile(pattern))
 
-            # Rewrite bashrc without script
-            uninstalled = bash_script.regex.sub('', content)
-            bashrc.seek(0)
-            bashrc.write(uninstalled)
-            bashrc.truncate()
-            print('Script removed. Remember to delete ~/.terminalrc')
-        elif bash_script.regex.search(content):
-            print('Already installed :)')
-        else:
-            bashrc.write(bash_script.text)
-            print('Install successful!')
+    # Script for zshrc
+    body = (
+        'source ~/.terminalrc/zshrc.sh\n'
+        'source ~/.terminalrc/aliases.sh\n'
+    )
+    pattern = (
+        r'source ~\/.terminalrc\/(bashrc|aliases|zshrc)\.sh\n'
+    )
+    zsh_script = Script(body, re.compile(pattern))
+
+    if args.install == 'bashrc':
+        result = insert_script(args.bashrc, bash_script)
+        print(result)
+    elif args.install == 'zshrc':
+        result = insert_script(args.zshrc, zsh_script)
+        print(result)
+    elif args.remove == 'bashrc':
+        result = remove_script(args.bashrc, bash_script)
+        print(result)
+    elif args.remove == 'zshrc':
+        result = remove_script(args.zshrc, zsh_script)
+        print(result)
+    else:
+        print("I didn't understand that.")
+
 
 
 if __name__ == '__main__':
