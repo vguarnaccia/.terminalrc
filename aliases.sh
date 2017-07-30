@@ -9,7 +9,36 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias less='less --RAW-CONTROL-CHARS --LINE-NUMBERS --LONG-PROMPT'
+alias less='less --RAW-CONTROL-CHARS --LINE-NUMBERS --LONG-PROMPT --quit-if-one-screen'
+
+# Colorize less using pygmentize if installed
+# Try `$ pip install Pygments` if it's not
+if [ -x "$(command -v pygmentize)" ]; then
+    # Use pygmentize to colorize `less`.
+    # Will not colorize if piped.
+    # I.e.:
+    # $ less script.py  # colorized
+    # $ cat script.py | less  # not colorized
+    # See https://www.meejah.ca/blog/less-pygments for more.
+    export LESSOPEN="| pygmentize %s"
+    # I find I need -X
+    export LESS='-XFR'
+    # ...but do *not* want -X for man-pages
+    export MANPAGER="less -+X -is"
+else
+    # At least colorize man pages
+    man() {
+        env \
+            LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
+            LESS_TERMCAP_md="$(printf "\e[1;31m")" \
+            LESS_TERMCAP_me="$(printf "\e[0m")" \
+            LESS_TERMCAP_se="$(printf "\e[0m")" \
+            LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
+            LESS_TERMCAP_ue="$(printf "\e[0m")" \
+            LESS_TERMCAP_us="$(printf "\e[1;32m")" \
+                man "$@"
+    };
+fi
 
 # Some more ls aliases
 alias ll='ls -AhlF'
