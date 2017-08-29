@@ -75,8 +75,8 @@ alias alert='; notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || ec
 alias H='| head'
 alias L='| less'
 
-alias bashrc='$EDITOR ~/.bashrc'
-alias zshrc='$EDITOR ~/.zshrc'
+alias bashrc='$VISUAL $HOME/.bashrc; source $HOME/.bashrc'
+alias zshrc='$VISUAL $HOME/.zshrc; source $HOME/.zshrc'
 
 # Useful unarchiver!
 function extract {
