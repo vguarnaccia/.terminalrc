@@ -111,7 +111,7 @@ alias gmv='git mv'
 alias grm='git rm'
 alias grc='git rm --cached'
 function gc { git commit -m "$*"; }
-alias gl="git log --max-count=40 --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'" # pretty log
+alias gl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'" # pretty log
 alias gpl='git pull'
 alias gpu='git push'
 alias gbr='git branch -vv'
