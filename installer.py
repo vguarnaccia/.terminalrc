@@ -93,23 +93,12 @@ def main(params=None):
     args = parse_args(params)
 
     # Script for bashrc
-    body = (
-        'source ~/.terminalrc/bashrc.sh\n'
-        'source ~/.terminalrc/aliases.sh\n'
-    )
-    pattern = (
-        r'source ~\/.terminalrc\/(bashrc|aliases|zshrc)\.sh\n'
-    )
+    body = 'source ~/.terminalrc/bashrc'
+    pattern = r'source ~\/.terminalrc\/(bashrc|zshrc)'
     bash_script = Script(body, re.compile(pattern))
 
     # Script for zshrc
-    body = (
-        'source ~/.terminalrc/zshrc.sh\n'
-        'source ~/.terminalrc/aliases.sh\n'
-    )
-    pattern = (
-        r'source ~\/.terminalrc\/(bashrc|aliases|zshrc)\.sh\n'
-    )
+    body = 'source ~/.terminalrc/zshrc'
     zsh_script = Script(body, re.compile(pattern))
 
     if args.install == 'bashrc':
