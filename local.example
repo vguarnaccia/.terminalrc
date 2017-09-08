@@ -1,0 +1,16 @@
+#! /bin/bash
+
+alias upgrade="apt update -y && apt upgrade -y && apt autoremove -y && apt autoclean"
+
+# When is XDG going to be a sensible thing?
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Scripts:$PATH"
+
+# Set text editor.
+export VISUAL="nvim"
+export EDITOR="$VISUAL"
+alias vim="nvim"
+alias vi="nvim"
+
+# Make laptop power efficient.
+alias power="sudo powertop --auto-tune"
