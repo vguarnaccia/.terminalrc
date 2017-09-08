@@ -1,8 +1,6 @@
 ## terminalrc
 
-This is how I setup my terminal. It currently supports bash and should work on [Cygwin](https://www.cygwin.com/). I plan to add [fish](http://fishshell.com/) as I use it more.
-
-## Getting Started
+This is how I setup my terminal. It currently supports bash and zsh on Linux and [Cygwin](https://www.cygwin.com/ "Cygwin").
 
 ### Prerequisites
 
@@ -10,7 +8,7 @@ All you need is bash, git, and python 2 or 3 (for the installation script). I as
 
 ### Installation
 
-Install with:
+Install on bash with:
 
     git clone https://github.com/vguarnaccia/.terminalrc.git ~
     python ~/.terminalrc/installer.py
@@ -22,13 +20,15 @@ Uninstall bash config with:
 
 And then delete `.terminalrc/`
 
+For zsh, follow the instructions above but replace bashrc with zshrc.
+
 ### Extendible
 
-If you need any local configurations, you can add them to `~/.terminalrc/bash.local`.
+If you need any local configurations, you can add them to `~/.terminalrc/local`. This way they are read when using bash or zsh.
 
 ### Platforms
 
-I've tested it on Linux and [Cygwin](https://www.cygwin.com/). It *should* also work on Mac, where it installs the script on .bash_profile instead of .bashrc.
+I've tested it on [Ubuntu](http://releases.ubuntu.com/16.04/ "Ubuntu") and [Cygwin](https://www.cygwin.com/ "Cygwin"). It *should* also work on Mac, where it installs the script on `.bash_profile` instead of `.bashrc`.
 
 ### Bash Features
 
@@ -44,7 +44,9 @@ I've tested it on Linux and [Cygwin](https://www.cygwin.com/). It *should* also 
 * `cdl`: Change directory and list contents.
 * `mkcd`: Make directory and enter it.
 
-You should also use the command `tree`; it's great for viewing directory hierarchies.
+### Unwarranted Suggestions
+
+Instead of using `ls` and `cd` everywhere when trying to understand a directory, use the `tree` command. When moving to a new directory, use [autojump](https://github.com/wting/autojump "autojump") instead of `cd`. [Silver Searcher](https://github.com/ggreer/the_silver_searcher "Silver Searcher") can be used in place of most `find`, `xargs`, `grep` combos. Lastly, `locate` is superior to `find` if the file you are looking for is a least a day old.
 
 #### Git Aliases
 
@@ -53,13 +55,12 @@ Because git commands are too long to type fully. If you are doing any complicate
 * `gs`: `git status`
 * `ga`: `git add`
 * `gd`: `git diff`
-* `gdc`: `git diff --cached`
+* `gdc`: `git diff --cached`, surprisingly helpful.
 * `grm`: `git rm`
 * `grc`: `git rm --cached`
-* `gc`: quick commit message, i.e. `gc add new alias` = `git commmit -m "add new alias"`
-* `gl`: `git log` but much prettier.
+* `gc`: `git commit`
+* `gl`: like `git log` but much prettier.
 * `gpl`: `git pull`
 * `gpu`: `git push`
 * `gbr`: `git branch -vv` -- verbose branching
-* `gst`: `git stash`
-* `gcache`: extend credentials timeout to 1 hour (for `gpu`/`gpl`).
+* `gcache`: extend credentials timeout to 1 hour (for `gpu`/`gpl`). Useful for when you don't has ssh setup.
