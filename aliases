@@ -1,8 +1,29 @@
 ###############################################################################
-# Alias Basic Commands
+# Git Abbreviations
 ###############################################################################
 
-# Colorize Commands
+alias gs='git status -sb'
+alias ga='git add'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gmv='git mv'
+alias grm='git rm'
+alias grc='git rm --cached'
+function gc { git commit -m "$*"; }
+alias gl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%  %C(green)%G?%Creset'" # pretty log
+alias gpl='git pull'
+alias gpu='git push'
+alias gbr='git branch -vv'
+alias gco='git checkout'
+alias gst='git stash'
+
+# Set the cache to timeout after 1 hour (setting is in seconds)
+alias gcache="git config --global credential.helper 'cache --timeout=3600'"
+
+###############################################################################
+# Colorize
+###############################################################################
+
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -10,6 +31,16 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias less='less --RAW-CONTROL-CHARS --LINE-NUMBERS --LONG-PROMPT --quit-if-one-screen'
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# Default to human readable figures
+alias df='df -h'
+alias du='du -h'
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Colorize less using pygmentize if installed
 # Try `$ pip install Pygments` if it's not
@@ -40,6 +71,10 @@ man() {
             man "$@"
 };
 
+###############################################################################
+# Improved Movement
+###############################################################################
+
 # Some more ls aliases
 alias ll='ls -AhlF'
 alias l='ls -CF'
@@ -59,10 +94,6 @@ function up
 # Better than `which`
 alias whence='type -a'
 
-# Default to human readable figures
-alias df='df -h'
-alias du='du -h'
-
 # Avoid mistakes
 alias rm='rm -I'
 alias cp='cp -i'
@@ -73,10 +104,24 @@ alias mv='mv -i'
 alias alert='; notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias H='| head'
+alias T='| tail'
 alias L='| less'
 
+# Alias various `open` commands as `o`
+if  [[ "$OSTYPE" == "darwin"* ]]; then
+    alias o='open'
+elif  [[ "$OSTYPE" == "cygwin" ]]; then
+    alias o='cygstart'
+elif  [[ "$OSTYPE" == "msys" ]]; then
+    alias o='explorer.exe'  # hoping this works
+else
+    alias o='xdg-open'
+fi
+
+# Quick editing and sourcing.
 alias bashrc='$VISUAL $HOME/.bashrc; source $HOME/.bashrc'
 alias zshrc='$VISUAL $HOME/.zshrc; source $HOME/.zshrc'
+alias localrc='$VISUAL $HOME/.terminalrc/local; source $HOME/.terminalrc/local'
 
 # Useful unarchiver!
 function extract {
@@ -93,30 +138,8 @@ function extract {
             *.zip)     unzip "$1"     ;;
             *.Z)       uncompress "$1";;
             *)         echo "'$1' cannot be extracted via extract()";;
-            esac
+        esac
     else
-            echo "'$1' is not a valid file"
+        echo "'$1' is not a valid file"
     fi
 }
-
-###############################################################################
-# Git Abbreviations
-###############################################################################
-
-alias gs='git status -sb'
-alias ga='git add'
-alias gd='git diff'
-alias gdc='git diff --cached'
-alias gmv='git mv'
-alias grm='git rm'
-alias grc='git rm --cached'
-function gc { git commit -m "$*"; }
-alias gl="git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%  %C(green)%G?%Creset'" # pretty log
-alias gpl='git pull'
-alias gpu='git push'
-alias gbr='git branch -vv'
-alias gco='git checkout'
-alias gst='git stash'
-
-# Set the cache to timeout after 1 hour (setting is in seconds)
-alias gcache="git config --global credential.helper 'cache --timeout=3600'"
