@@ -18,10 +18,11 @@ Examples:
 """
 
 import argparse
-from collections import namedtuple
-from os import path
 import re
 import sys
+from collections import namedtuple
+from os import path
+
 
 def parse_args(params=None):
     """Create Namespace object from a string or argv[1:].
