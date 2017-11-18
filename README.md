@@ -10,7 +10,8 @@ All you need is bash, git, and python 2 or 3 (for the installation script). I as
 
 Install on bash with:
 
-    git clone https://github.com/vguarnaccia/.terminalrc.git ~
+    cd ~
+    git clone https://github.com/vguarnaccia/.terminalrc.git
     python ~/.terminalrc/installer.py
     source ~/.bashrc
 
