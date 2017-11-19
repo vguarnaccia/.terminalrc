@@ -12,7 +12,7 @@ Install on bash with:
 
     cd ~
     git clone https://github.com/vguarnaccia/.terminalrc.git
-    python ~/.terminalrc/installer.py
+    python ~/.terminalrc/installer.py --install bashrc
     source ~/.bashrc
 
 Uninstall bash config with:
