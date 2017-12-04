@@ -21,11 +21,6 @@ fi
 # Bash Setup
 ###############################################################################
 
-# source non-generic configuration
-if [ -e "${HOME}/.terminalrc/local" ] ; then
-    source "${HOME}/.terminalrc/local"
-fi
-
 # source alias configuration
 if [ -e "${HOME}/.terminalrc/aliases" ] ; then
     source "${HOME}/.terminalrc/aliases"
@@ -166,3 +161,13 @@ fi
 if [ -f "${HOME}/.bash_functions" ]; then
   source "${HOME}/.bash_functions"
 fi
+
+###############################################################################
+# Load Local Config
+###############################################################################
+
+# source non-generic configuration
+if [ -e "${HOME}/.terminalrc/local" ] ; then
+    source "${HOME}/.terminalrc/local"
+fi
+
