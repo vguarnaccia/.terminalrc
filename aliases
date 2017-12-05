@@ -81,8 +81,8 @@ alias l='ls -CF'
 alias cd..='cd ..' # common typo
 
 # Easily move around directories
-function cdl { cd "$1"; ls; }
-function mkcd { mkdir -p -- "$1"; cd -P -- "$1"; }
+function cdl { cd "$1" || return; ls; }
+function mkcd { mkdir -p -- "$1"; cd -P -- "$1" || return; }
 function up
 {
     for ((i=1; i<=$1; i++));
