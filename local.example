@@ -1,10 +1,14 @@
 #! /bin/bash
 
+# Arch maintainence
+alias auru="yaourt --sync --refresh --refresh --sysupgrade --aur --noconfirm"  # -Syyua --nocomfirm
+alias pacrepo='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist'
+
+# if you're into Debian-based OSes
 alias upgrade="apt update -y && apt upgrade -y && apt autoremove -y && apt autoclean"
 
 # When is XDG going to be a sensible thing?
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/Scripts:$PATH"
 
 # Set text editor.
 export VISUAL="nvim"
@@ -12,5 +16,12 @@ export EDITOR="$VISUAL"
 alias vim="nvim"
 alias vi="nvim"
 
-# Make laptop power efficient.
-alias power="sudo powertop --auto-tune"
+# Alias
+alias l="exa --classify"
+alias la="exa --classify --all"
+alias ll="exa --git --classify --header --long"
+alias lla="exa --git --classify --header --long --all"
+alias lt="exa  --git --classify --tree"
+alias lta="exa  --git --classify --tree --all"
+alias llt="exa -abghHliST --classify --git"
+alias llta=llt
