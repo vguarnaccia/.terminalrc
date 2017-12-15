@@ -1,3 +1,5 @@
+#! /bin/bash
+
 ###############################################################################
 # Git Abbreviations
 ###############################################################################
@@ -43,23 +45,13 @@ alias df='df -h'
 alias du='du -h'
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x "$(command -v lesspipe.sh)" ] && LESSOPEN="| lesspipe.sh %s"
+export LESSOPEN #(sh like shells)
 
-# Colorize less using pygmentize if installed
+# Colorize less using pygmentize if installed with lesspipe
 # Try `$ pip install Pygments` if it's not
-if [ -x "$(command -v pygmentize)" ]; then
-	# Use pygmentize to colorize `less`.
-	# Will not colorize if piped.
-	# I.e.:
-	# $ less script.py  # colorized
-	# $ cat script.py | less  # not colorized
-	# See https://www.meejah.ca/blog/less-pygments for more.
-	export LESSOPEN="| pygmentize %s"
-	# I find I need -X
-	export LESS='-XFR'
-	# ...but do *not* want -X for man-pages
-	export MANPAGER="less -+X -is"
-fi
+[ -x "$(command -v pygmentize)" ] && LESSCOLORIZER="| pygmentize %s"
+export LESSCOLORIZER
 
 # At least colorize man pages
 function man() {
@@ -83,17 +75,17 @@ alias cd..='cd ..' # common typo
 
 # Easily move around directories
 function cdl() {
-	cd "$1" || return
-	ls
+    cd "$1" || return
+    ls
 }
 function mkcd() {
-	mkdir -p -- "$1"
-	cd -P -- "$1" || return
+    mkdir -p -- "$1"
+    cd -P -- "$1" || return
 }
 function up() {
-	for ((i = 1; i <= $1; i++)); do
-		cd ..
-	done
+    for ((i = 1; i <= $1; i++)); do
+        cd ..
+    done
 }
 
 # Better than `which`
@@ -110,13 +102,13 @@ alias -g L='| less'
 
 # Alias various `open` commands as `o`
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	alias o='open'
+    alias o='open'
 elif [[ "$OSTYPE" == "cygwin" ]]; then
-	alias o='cygstart'
+    alias o='cygstart'
 elif [[ "$OSTYPE" == "msys" ]]; then
-	alias o='explorer.exe' # hoping this works
+    alias o='explorer.exe' # hoping this works
 else
-	alias o='xdg-open'
+    alias o='xdg-open'
 fi
 
 # Quick editing and sourcing.
@@ -126,21 +118,21 @@ alias localrc='$VISUAL $HOME/.terminalrc/local; source $HOME/.terminalrc/local'
 
 # Useful unarchiver!
 function extract() {
-	if [ -f "$1" ]; then
-		case "$1" in
-		*.tar.bz2) tar xjf "$1" ;;
-		*.tar.gz) tar xzf "$1" ;;
-		*.bz2) bunzip2 "$1" ;;
-		*.rar) rar x "$1" ;;
-		*.gz) gunzip "$1" ;;
-		*.tar) tar xf "$1" ;;
-		*.tbz2) tar xjf "$1" ;;
-		*.tgz) tar xzf "$1" ;;
-		*.zip) unzip "$1" ;;
-		*.Z) uncompress "$1" ;;
-		*) echo "'$1' cannot be extracted via extract()" ;;
-		esac
-	else
-		echo "'$1' is not a valid file"
-	fi
+    if [ -f "$1" ]; then
+        case "$1" in
+        *.tar.bz2) tar xjf "$1" ;;
+        *.tar.gz) tar xzf "$1" ;;
+        *.bz2) bunzip2 "$1" ;;
+        *.rar) rar x "$1" ;;
+        *.gz) gunzip "$1" ;;
+        *.tar) tar xf "$1" ;;
+        *.tbz2) tar xjf "$1" ;;
+        *.tgz) tar xzf "$1" ;;
+        *.zip) unzip "$1" ;;
+        *.Z) uncompress "$1" ;;
+        *) echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
