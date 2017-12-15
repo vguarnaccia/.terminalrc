@@ -45,13 +45,11 @@ alias df='df -h'
 alias du='du -h'
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x "$(command -v lesspipe.sh)" ] && LESSOPEN="| lesspipe.sh %s"
-export LESSOPEN #(sh like shells)
+[ -x "$(command -v lesspipe.sh)" ] && export LESSOPEN="| lesspipe.sh %s"
 
 # Colorize less using pygmentize if installed with lesspipe
 # Try `$ pip install Pygments` if it's not
-[ -x "$(command -v pygmentize)" ] && LESSCOLORIZER="| pygmentize %s"
-export LESSCOLORIZER
+[ -x "$(command -v pygmentize)" ] && export LESSCOLORIZER=pygmentize
 
 # At least colorize man pages
 function man() {

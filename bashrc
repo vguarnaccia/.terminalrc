@@ -21,6 +21,11 @@ fi
 # Bash Setup
 ###############################################################################
 
+# source PATH
+if [ -e "${HOME}/.terminalrc/PATH" ] ; then
+    source "${HOME}/.terminalrc/PATH" 
+ fi
+
 # source alias configuration
 if [ -e "${HOME}/.terminalrc/aliases" ] ; then
     source "${HOME}/.terminalrc/aliases"

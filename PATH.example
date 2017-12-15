@@ -1,0 +1,2 @@
+# It may be necessary to source your local path before proceeding.
+export PATH="$HOME/.local/bin:$PATH"
