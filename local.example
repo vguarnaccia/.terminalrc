@@ -1,11 +1,14 @@
 #! /bin/bash
 
 # Arch maintainence
-alias auru="yaourt --sync --refresh --refresh --sysupgrade --aur --noconfirm"  # -Syyua --nocomfirm
-alias pacrepo='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist'
-
-# if you're into Debian-based OSes
-alias upgrade="apt update -y && apt upgrade -y && apt autoremove -y && apt autoclean"
+alias auru="yaourt -Syua --nocomfirm"
+alias pacreflect='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist && sudo pacman -Syyu'
+function pipupgrade(){
+    pip list --user --outdated --format=freeze |  # List all outdated user-site packages (no globally installed ones)
+    grep -v '^\-e' |  # Remove editably installed packages
+    cut -d = -f 1  |  # Remove version number
+    xargs -r -n1 pip install --user -U  #  Update remaining packages if any
+} 
 
 # Set text editor.
 export VISUAL="nvim"
@@ -13,7 +16,10 @@ export EDITOR="$VISUAL"
 alias vim="nvim"
 alias vi="nvim"
 
-# Alias
+# Safer `rm`
+alias rm='trash'
+
+# Alias an improved `ls`
 alias l="exa --classify"
 alias la="exa --classify --all"
 alias ll="exa --git --classify --header --long"
