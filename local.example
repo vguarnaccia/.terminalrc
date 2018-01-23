@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Arch maintainence
-alias auru="yaourt -Syua --nocomfirm"
+alias auru='yaourt -Syua --noconfirm'
 alias pacreflect='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist && sudo pacman -Syyu'
 function pipupgrade(){
     pip list --user --outdated --format=freeze |  # List all outdated user-site packages (no globally installed ones)
