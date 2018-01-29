@@ -4,9 +4,14 @@
 alias auru='yaourt -Syua --noconfirm'
 alias pacreflect='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist && sudo pacman -Syyu'
 function pipupgrade(){
-    pip list --user --outdated --format=freeze |  # List all outdated user-site packages (no globally installed ones)
+    # 0. Steps for installing python packages with Arch. Adjust as needed.
+    # 1. `$ sudo pacman -S python-pip`
+    # 2. `$ echo "[install]\nuser=yes" >> ~/.config/pip/pip.conf`
+    # 3. Never use `sudo` with pip! Ensures system file are managed by pacman.
+
+    pip list --user --outdated --format=freeze |  # List all outdated user-site packages (not globally installed ones)
     grep -v '^\-e' |  # Remove editably installed packages
-    cut -d = -f 1  |  # Remove version number
+    cut -d = -f 1  |  # Remove version information
     xargs -r -n1 pip install --user -U  #  Update remaining packages if any
 } 
 
