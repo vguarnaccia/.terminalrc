@@ -1,4 +1,5 @@
 #! /bin/bash
+# shellcheck disable=SC1090
 
 ###############################################################################
 # House Keeping
@@ -30,13 +31,9 @@ if [ -e "${HOME}/.terminalrc/aliases" ]; then
     source "${HOME}/.terminalrc/aliases"
 fi
 
-# Echo whatis for random function
-echo "Did you know that:"
-whatis "$(find /bin | shuf -n 1)"
-
 # source autojump
 if [ -e /usr/share/autojump/autojump.sh ]; then
-    source /usr/share/autojump/autojump.sh
+    source /usr/share/autojump/autojump.bash
 fi
 
 ###############################################################################
@@ -84,13 +81,15 @@ shopt -s cdspell
 
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
-[[ -f /etc/bash_completion ]] && . /etc/bash_completion
+for file in /etc/bash_completion.d/*; do
+    . "$file"
+done
 
 # pip bash completion start
 _pip_completion() {
     COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]}" \
-        COMP_CWORD=$COMP_CWORD \
-        PIP_AUTO_COMPLETE=1 $1))
+        COMP_CWORD="$COMP_CWORD" \
+        PIP_AUTO_COMPLETE=1 "$1"))
 }
 complete -o default -F _pip_completion pip
 # pip bash completion end
