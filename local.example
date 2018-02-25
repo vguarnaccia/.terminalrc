@@ -3,17 +3,17 @@
 # Arch maintainence
 alias auru='yaourt -Syua --noconfirm'
 alias pacreflect='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist && sudo pacman -Syyu'
-function pipupgrade(){
+function pipupgrade() {
     # 0. Steps for installing python packages with Arch. Adjust as needed.
     # 1. `$ sudo pacman -S python-pip`
     # 2. `$ echo "[install]\nuser=yes" >> ~/.config/pip/pip.conf`
     # 3. Never use `sudo` with pip! Ensures system file are managed by pacman.
 
-    pip list --user --outdated --format=freeze |  # List all outdated user-site packages (not globally installed ones)
-    grep -v '^\-e' |  # Remove editably installed packages
-    cut -d = -f 1  |  # Remove version information
-    xargs -r -n1 pip install --user -U  #  Update remaining packages if any
-} 
+    pip list --user --outdated --format=freeze | # List all outdated user-site packages (not globally installed ones)
+        grep -v '^\-e' | # Remove editably installed packages
+        cut -d = -f 1 | # Remove version information
+        xargs -r -n1 pip install --user -U #  Update remaining packages if any
+}
 
 # Set text editor.
 export VISUAL="nvim"
@@ -25,11 +25,11 @@ alias vi="nvim"
 alias rm='trash'
 
 # Alias an improved `ls`
-alias l="exa --classify"
+alias l="exa --classify --git-ignore"
 alias la="exa --classify --all"
-alias ll="exa --git --classify --header --long"
-alias lla="exa --git --classify --header --long --all"
-alias lt="exa  --git --classify --tree"
+alias ll="exa --git --git-ignore --classify --header --long --group"
+alias lla="exa --git --classify --header --long --group --all"
+alias lt="exa  --git --git-ignore --classify --tree"
 alias lta="exa  --git --classify --tree --all"
 alias llt="exa -abghHliST --classify --git"
 alias llta=llt

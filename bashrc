@@ -5,7 +5,7 @@
 ###############################################################################
 
 # If not running interactively, don't do anything
-[[ "$-" != *i* ]] && return
+[[ $- != *i* ]] && return
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -16,26 +16,26 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-
 ###############################################################################
 # Bash Setup
 ###############################################################################
 
 # source PATH
-if [ -e "${HOME}/.terminalrc/PATH" ] ; then
-    source "${HOME}/.terminalrc/PATH" 
- fi
+if [ -e "${HOME}/.terminalrc/PATH" ]; then
+    source "${HOME}/.terminalrc/PATH"
+fi
 
 # source alias configuration
-if [ -e "${HOME}/.terminalrc/aliases" ] ; then
+if [ -e "${HOME}/.terminalrc/aliases" ]; then
     source "${HOME}/.terminalrc/aliases"
 fi
 
 # Echo whatis for random function
-echo "Did you know that:"; whatis "$(find /bin | shuf -n 1)"
+echo "Did you know that:"
+whatis "$(find /bin | shuf -n 1)"
 
 # source autojump
-if [ -e /usr/share/autojump/autojump.sh ] ; then
+if [ -e /usr/share/autojump/autojump.sh ]; then
     source /usr/share/autojump/autojump.sh
 fi
 
@@ -87,11 +87,10 @@ shopt -s cdspell
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 # pip bash completion start
-_pip_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                   COMP_CWORD=$COMP_CWORD \
-                   PIP_AUTO_COMPLETE=1 $1 ) )
+_pip_completion() {
+    COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]}" \
+        COMP_CWORD=$COMP_CWORD \
+        PIP_AUTO_COMPLETE=1 $1))
 }
 complete -o default -F _pip_completion pip
 # pip bash completion end
@@ -102,7 +101,7 @@ complete -o default -F _pip_completion pip
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm|xterm-color|*-256color) color_prompt=yes;;
+    xterm | xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # Separate branch name from hints by a pipe.
@@ -151,7 +150,6 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-
 ###############################################################################
 # More House Keeping
 ###############################################################################
@@ -160,21 +158,21 @@ HISTFILESIZE=2000
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
 
 # Some people use a different file for aliases
 if [ -f "${HOME}/.bash_aliases" ]; then
-  source "${HOME}/.bash_aliases"
+    source "${HOME}/.bash_aliases"
 fi
 
 # Some people use a different file for functions
 if [ -f "${HOME}/.bash_functions" ]; then
-  source "${HOME}/.bash_functions"
+    source "${HOME}/.bash_functions"
 fi
 
 ###############################################################################
@@ -182,6 +180,6 @@ fi
 ###############################################################################
 
 # source non-generic configuration
-if [ -e "${HOME}/.terminalrc/local" ] ; then
+if [ -e "${HOME}/.terminalrc/local" ]; then
     source "${HOME}/.terminalrc/local"
 fi
