@@ -1,3 +1,4 @@
+#! /bin/env zsh
 # source PATH
 if [ -e "${HOME}/.terminalrc/PATH" ] ; then
     source "${HOME}/.terminalrc/PATH" 
@@ -12,6 +13,10 @@ fi
 if [ -e "${HOME}/.terminalrc/local" ] ; then
     source "${HOME}/.terminalrc/local"
 fi
+
+alias -g H='| head'
+alias -g T='| tail'
+alias -g L='| less'
 
 # I recommend using oh-my-zsh and using the plugins below.
 
@@ -31,4 +36,3 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip
 # pip zsh completion end
-

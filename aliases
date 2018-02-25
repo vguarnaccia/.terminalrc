@@ -37,8 +37,7 @@ alias egrep='egrep --color=auto'
 alias less='less -XF --RAW-CONTROL-CHARS --LINE-NUMBERS --LONG-PROMPT'
 
 # colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;\
-    35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Default to human readable figures
 alias df='df -h'
@@ -93,10 +92,6 @@ alias whence='type -a'
 alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
-
-alias -g H='| head'
-alias -g T='| tail'
-alias -g L='| less'
 
 # Alias various `open` commands as `o`
 if [[ "$OSTYPE" == "darwin"* ]]; then
