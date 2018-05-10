@@ -14,7 +14,7 @@ shopt -s checkwinsize
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 ###############################################################################
@@ -23,17 +23,17 @@ fi
 
 # source PATH
 if [ -e "${HOME}/.terminalrc/PATH" ]; then
-    source "${HOME}/.terminalrc/PATH"
+	source "${HOME}/.terminalrc/PATH"
 fi
 
 # source alias configuration
 if [ -e "${HOME}/.terminalrc/aliases" ]; then
-    source "${HOME}/.terminalrc/aliases"
+	source "${HOME}/.terminalrc/aliases"
 fi
 
 # source autojump
 if [ -e /usr/share/autojump/autojump.sh ]; then
-    source /usr/share/autojump/autojump.bash
+	source /usr/share/autojump/autojump.bash
 fi
 
 ###############################################################################
@@ -82,14 +82,14 @@ shopt -s cdspell
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
 for file in /etc/bash_completion.d/*; do
-    . "$file"
+	. "$file"
 done
 
 # pip bash completion start
 _pip_completion() {
-    COMPREPLY=("$(COMP_WORDS="${COMP_WORDS[*]}" \
-        COMP_CWORD="$COMP_CWORD" \
-        PIP_AUTO_COMPLETE=1 "$1")")
+	COMPREPLY=("$(COMP_WORDS="${COMP_WORDS[*]}" \
+		COMP_CWORD="$COMP_CWORD" \
+		PIP_AUTO_COMPLETE=1 "$1")")
 }
 complete -o default -F _pip_completion pip
 # pip bash completion end
@@ -100,7 +100,7 @@ complete -o default -F _pip_completion pip
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm | xterm-color | *-256color) color_prompt=yes ;;
+xterm | xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # Separate branch name from hints by a pipe.
@@ -126,12 +126,12 @@ export GIT_PS1_DESCRIBE_STYLE="branch"
 
 # Git Prompt
 if [ "$color_prompt" = yes ]; then
-    GREEN='\[\e[01;32m\]'
-    BLUE='\[\e[01;34m\]'
-    RESET='\[\e[00m\]'
-    PROMPT_COMMAND='__git_ps1 "${debian_chroot:+($debian_chroot) }$GREEN\u@\h$RESET $BLUE\w$RESET" "\n\$ "'
+	GREEN='\[\e[01;32m\]'
+	BLUE='\[\e[01;34m\]'
+	RESET='\[\e[00m\]'
+	PROMPT_COMMAND='__git_ps1 "${debian_chroot:+($debian_chroot) }$GREEN\u@\h$RESET $BLUE\w$RESET" "\n\$ "'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h \w $(__git_ps1)\n\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h \w $(__git_ps1)\n\$ '
 fi
 
 ###############################################################################
@@ -157,21 +157,21 @@ HISTFILESIZE=2000
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
 fi
 
 # Some people use a different file for aliases
 if [ -f "${HOME}/.bash_aliases" ]; then
-    source "${HOME}/.bash_aliases"
+	source "${HOME}/.bash_aliases"
 fi
 
 # Some people use a different file for functions
 if [ -f "${HOME}/.bash_functions" ]; then
-    source "${HOME}/.bash_functions"
+	source "${HOME}/.bash_functions"
 fi
 
 ###############################################################################
@@ -180,5 +180,5 @@ fi
 
 # source non-generic configuration
 if [ -e "${HOME}/.terminalrc/local" ]; then
-    source "${HOME}/.terminalrc/local"
+	source "${HOME}/.terminalrc/local"
 fi

@@ -55,13 +55,13 @@ alias du='du -h'
 
 # At least colorize man pages
 function man() {
-    LESS_TERMCAP_md=$'\e[01;31m' \
-        LESS_TERMCAP_me=$'\e[0m' \
-        LESS_TERMCAP_se=$'\e[0m' \
-        LESS_TERMCAP_so=$'\e[01;44;33m' \
-        LESS_TERMCAP_ue=$'\e[0m' \
-        LESS_TERMCAP_us=$'\e[01;32m' \
-        command man "$@"
+	LESS_TERMCAP_md=$'\e[01;31m' \
+		LESS_TERMCAP_me=$'\e[0m' \
+		LESS_TERMCAP_se=$'\e[0m' \
+		LESS_TERMCAP_so=$'\e[01;44;33m' \
+		LESS_TERMCAP_ue=$'\e[0m' \
+		LESS_TERMCAP_us=$'\e[01;32m' \
+		command man "$@"
 }
 
 ###############################################################################
@@ -75,17 +75,17 @@ alias cd..='cd ..' # common typo
 
 # Easily move around directories
 function cdl() {
-    cd "$1" || return
-    ls
+	cd "$1" || return
+	ls
 }
 function mkcd() {
-    mkdir -p -- "$1"
-    cd -P -- "$1" || return
+	mkdir -p -- "$1"
+	cd -P -- "$1" || return
 }
 function up() {
-    for ((i = 1; i <= $1; i++)); do
-        cd ..
-    done
+	for ((i = 1; i <= $1; i++)); do
+		cd ..
+	done
 }
 
 # Better than `which`
