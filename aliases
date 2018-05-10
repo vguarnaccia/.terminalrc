@@ -4,7 +4,7 @@
 # Git Abbreviations
 ###############################################################################
 
-alias gs='git status -sb'
+alias gst='git status -sb'
 alias ga='git add'
 alias gd='git diff'
 alias gdc='git diff --cached'
@@ -19,7 +19,7 @@ alias gpl='git pull'
 alias gpu='git push'
 alias gbr='git branch -vv'
 alias gco='git checkout'
-alias gst='git stash'
+alias gstash='git stash'
 
 # Set the cache to timeout after 1 hour (setting is in seconds)
 alias gcache="git config --global credential.helper 'cache --timeout=3600'"
