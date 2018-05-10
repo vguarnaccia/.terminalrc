@@ -111,3 +111,7 @@ fi
 alias bashrc='$VISUAL $HOME/.bashrc; source $HOME/.bashrc'
 alias zshrc='$VISUAL $HOME/.zshrc; source $HOME/.zshrc'
 alias localrc='$VISUAL $HOME/.terminalrc/local; source $HOME/.terminalrc/local'
+
+wttr() {
+	curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-pasadena-ca}"
+}
