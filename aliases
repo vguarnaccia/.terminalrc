@@ -13,8 +13,11 @@ alias grm='git rm'
 alias grc='git rm --cached'
 function gc() { git commit -m "$*"; }
 # Pretty log.
-alias gl="git log --graph --pretty=format:'%C(yellow)%h%Creset %C(green)%G?%\
-    Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+FORMAT='%C(yellow)%h%Creset %C(green)%G? %Cgreen(%cr) %Creset%C(yellow)%d%Creset %s Creset %C(dim)<%an>%Creset'
+PRETTY="--pretty=format:'$FORMAT'"
+alias gl="git log --graph --all $PRETTY"
+alias gll="gl --stat"
+alias gls="gl --pickaxe-all -G "
 alias gpl='git pull'
 alias gpu='git push'
 alias gbr='git branch -vv'
