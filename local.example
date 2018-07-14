@@ -1,18 +1,29 @@
-#! /bin/bash
+#! /bin/sh
 
 # Arch maintainence
-alias auru='yaourt -Syua --noconfirm'
 alias pacreflect='sudo reflector -l 20 -f 10 --save /etc/pacman.d/mirrorlist && sudo pacman -Syyu'
-function pipupgrade() {
-    # 0. Steps for installing python packages with Arch. Adjust as needed.
-    # 1. `$ sudo pacman -S python-pip`
-    # 2. `$ echo "[install]\nuser=yes" >> ~/.config/pip/pip.conf`
-    # 3. Never use `sudo` with pip! Ensures system file are managed by pacman.
 
-    pip list --user --outdated --format=freeze | # List all outdated user-site packages (not globally installed ones)
-        grep -v '^\-e' | # Remove editably installed packages
-        cut -d = -f 1 | # Remove version information
-        xargs -r -n1 pip install --user -U #  Update remaining packages if any
+pipupgrade() {
+	# 0. Never use `sudo` with pip! Ensures system file are managed by apt|yum|pacman.
+	# 1. Install python-pip using your distro's default package manager.
+	# 2. $ echo "[install]\nuser=yes" >> "${XDG_CONFIG_HOME:-$HOME/.config/}pip/pip.conf"
+
+	# https://github.com/pypa/pip/issues/5583 --not-required is not working
+	# with --outdated.
+	temp_dir="$(mktemp -d)"
+	trap 'rm -rf $temp_dir' EXIT
+
+	pip list --user --not-required --format=freeze >"$temp_dir/installed.txt"
+	pip list --user --outdated --format=freeze >"$temp_dir/outdated.txt"
+	comm --check-order -12 "$temp_dir/installed.txt" "$temp_dir/outdated.txt" | # List all outdated user-site packages (not globally installed ones)
+		grep -v '^\-e' | # Remove editably installed packages
+		cut -d = -f 1 | # Remove version information
+		xargs -r -n1 pip install --user -U #  Update remaining packages if any
+
+	# pip list --user --not-required --exclude-editable --outdated --format=freeze |
+	# 	grep -v '^\-e' | # Remove editably installed packages
+	# 	cut -d = -f 1 | # Remove version information
+	# 	xargs -r -n1 pip install --user -U #  Update remaining packages if any
 }
 
 # Set text editor.
